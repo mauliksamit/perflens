@@ -72,3 +72,20 @@ test("invalid file shows an error instead of crashing", async ({ page }) => {
   await page.getByTestId("file-input").setInputFiles({ name: "bad.json", mimeType: "application/json", buffer: Buffer.from("{nope") });
   await expect(page.getByRole("alert")).toContainText("invalid JSON");
 });
+
+test("LLM decode samples: eager decode shows more GPU idle time than CUDA-graph decode", async ({ page }) => {
+  await page.goto("/");
+  const idle = async () => {
+    const t = (await page.getByTestId("idle-pct").first().textContent()) ?? "";
+    const m = /\(([\d.]+)%\)/.exec(t);
+    expect(m).not.toBeNull();
+    return Number(m![1]);
+  };
+  await loadSample(page, "LLM decode: TinyLlama eager (gz)");
+  const eager = await idle();
+  await loadSample(page, "LLM decode: TinyLlama CUDA graph (gz)");
+  await expect(page.getByTestId("parse-stats")).toContainText("trace events");
+  const graph = await idle();
+  expect(eager).toBeGreaterThan(graph);
+  await expect(page.getByTestId("compare-table").locator("tbody tr").first()).toBeVisible();
+});
