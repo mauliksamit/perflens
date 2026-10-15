@@ -3,14 +3,28 @@
 // Usage: npm run build && npm run screenshots
 // Writes docs/screenshots/*.png and results/browser_parse.json.
 import { spawn } from "node:child_process";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { gunzipSync } from "node:zlib";
 import { join } from "node:path";
 import { chromium } from "@playwright/test";
 
 const ROOT = process.cwd();
 const URL = "http://localhost:4173/";
-const LARGE = "Large: eager block, 300 steps (.gz)";
 const REPEATS = 5;
+
+// Same rule as scripts/facts.ts: the largest sample by decompressed size, so
+// the browser and Node parse timings refer to the same file.
+function largestSample() {
+  const manifest = JSON.parse(readFileSync(join(ROOT, "data", "samples.json"), "utf-8")).samples;
+  let best = null;
+  for (const s of manifest) {
+    const raw = readFileSync(join(ROOT, "data", s.file));
+    const size = s.file.endsWith(".gz") ? gunzipSync(raw).length : raw.length;
+    if (!best || size > best.size) best = { ...s, size };
+  }
+  return best;
+}
+const LARGE = largestSample();
 
 function startPreview() {
   // Run vite's own entry with node (no shell) so kill() reaches the server
@@ -62,7 +76,7 @@ try {
   const runs = [];
   for (let i = 0; i < REPEATS; i++) {
     await page.goto(URL);
-    await load(page, LARGE);
+    await load(page, LARGE.label);
     const el = page.getByTestId("parse-stats");
     runs.push({
       trace_events: Number(await el.getAttribute("data-events")),
@@ -72,7 +86,7 @@ try {
   const sorted = runs.map((r) => r.worker_total_ms).sort((a, b) => a - b);
   const result = {
     generated_by: "scripts/screenshots.mjs",
-    sample: "data/traces/block_eager_300steps.json.gz",
+    sample: `data/${LARGE.file}`,
     browser: `chromium ${browser.version()} (Playwright, headless)`,
     repeats: REPEATS,
     trace_events: runs[0]?.trace_events ?? null,
