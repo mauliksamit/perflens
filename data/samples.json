@@ -1,0 +1,9 @@
+{
+  "samples": [
+    { "file": "traces/block_eager.json", "label": "Transformer block (eager attention)", "description": "torch.profiler trace, FP32, TF32 off, 5 steps; see traces/block_eager.json.meta.json" },
+    { "file": "traces/block_sdpa.json", "label": "Transformer block (SDPA attention)", "description": "Same block with scaled_dot_product_attention; see .meta.json" },
+    { "file": "traces/block_eager_300steps.json.gz", "label": "Large: eager block, 300 steps (.gz)", "description": "Large gzipped trace for parse-time measurement; see .meta.json" },
+    { "file": "kern/bench_M1024_runV_strict.json", "label": "kern 1024³ run V (strict)", "description": "kern SGEMM ladder, strict IEEE build; source commit in .meta.json" },
+    { "file": "kern/bench_M1024_runN_fastmath.json", "label": "kern 1024³ run N (fast-math)", "description": "kern SGEMM ladder, --use_fast_math build; source commit in .meta.json" }
+  ]
+}
