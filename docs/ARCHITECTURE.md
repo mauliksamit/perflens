@@ -50,8 +50,8 @@ inside a kernel.
 
 **Run comparison.** For items present in both runs (kern kernels, or trace
 kernel names), samples are kern's raw per-iteration timings or a trace's
-per-invocation durations. change = median(B)/median(A) − 1. The 95%
-percentile-bootstrap CI of that ratio uses 2,000 resamples of A and B with a
+per-invocation durations. change = median(B)/median(A) − 1.
+The 95% percentile-bootstrap CI of that ratio uses 2,000 resamples of A and B with a
 seeded PRNG (mulberry32), so a verdict is reproducible. The verdict is
 "faster"/"slower" only if the CI excludes no-change **and** |change| is at
 least the threshold (default 5%, matching kern's repeat-run drift rule);

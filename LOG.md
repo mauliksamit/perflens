@@ -39,3 +39,12 @@
   read from the GitHub API without credentials; not claimed. Check
   https://github.com/mauliksamit/perflens/actions. The Pages workflow will
   fail until Pages is enabled with "Source: GitHub Actions".
+
+## 2026-10-15 — LLM decode samples from llm-bringup
+- Added two TinyLlama-1.1B decode traces (eager vs CUDA graph, batch 1) as
+  samples. In perflens the eager trace's idle-gap lane is dense and the graph
+  trace's nearly empty; a new e2e test asserts the eager idle share is higher.
+- Miss, fixed: the Node and browser parse timings briefly referred to
+  different "largest" samples; both scripts now use the same rule.
+- perflens also gained `scripts/analyze_cli.ts`, used by llm-bringup to
+  produce its per-step GPU time breakdown.

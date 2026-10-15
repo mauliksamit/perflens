@@ -1,7 +1,7 @@
 {
   "generated_by": "scripts/facts.ts",
-  "date_utc": "2026-10-15T05:31:19Z",
-  "git_commit": "7b999d6d983bd3465439ac1f77253b218dee8792",
+  "date_utc": "2026-10-15T07:33:55Z",
+  "git_commit": "3116c6f5edbfd640b8af6250360260c5fcb4473f",
   "environment": {
     "node": "v24.21.0",
     "os": "win32 10.0.26200",
@@ -12,33 +12,35 @@
     "data/kern/bench_M1024_runV_strict.json",
     "data/traces/block_eager.json",
     "data/traces/block_eager_300steps.json.gz",
-    "data/traces/block_sdpa.json"
+    "data/traces/block_sdpa.json",
+    "data/traces/llm/tinyllama_s2_sdpa_b1_p128.json.gz",
+    "data/traces/llm/tinyllama_s4_cuda_graph_b1_p128.json.gz"
   ],
   "largest_sample_parse": {
-    "sample": "data/traces/block_eager_300steps.json.gz",
-    "file_bytes": 1302985,
-    "json_bytes": 25729903,
-    "trace_events": 61887,
-    "gpu_events": 6300,
+    "sample": "data/traces/llm/tinyllama_s2_sdpa_b1_p128.json.gz",
+    "file_bytes": 1879057,
+    "json_bytes": 35395308,
+    "trace_events": 107107,
+    "gpu_events": 13905,
     "repeats": 7,
-    "node_total_ms_median": 151.9,
-    "node_parse_ms_median": 62.7,
+    "node_total_ms_median": 225.6,
+    "node_parse_ms_median": 91,
     "definition": "Node (vite-node) on this machine: gunzip + JSON.parse + normalize + analyses (top kernels, idle gaps, heuristic buckets); median of repeats. Not a browser measurement."
   },
   "browser_parse": {
     "source": "results/browser_parse.json (written by scripts/screenshots.mjs)",
     "generated_by": "scripts/screenshots.mjs",
-    "sample": "data/traces/block_eager_300steps.json.gz",
+    "sample": "data/traces/llm/tinyllama_s2_sdpa_b1_p128.json.gz",
     "browser": "chromium 131.0.6778.33 (Playwright, headless)",
     "repeats": 5,
-    "trace_events": 61887,
-    "worker_total_ms_median": 73.8,
+    "trace_events": 107107,
+    "worker_total_ms_median": 112.2,
     "worker_total_ms_runs": [
-      72.6,
-      77.3,
-      73.8,
-      75.5,
-      73.8
+      112.1,
+      107.5,
+      112.2,
+      127.1,
+      132.9
     ],
     "definition": "Time inside the Web Worker for gunzip + JSON.parse + normalize + analyses, from performance.now() in the worker (app's data-parse-ms); excludes fetch and React render. Each repeat is a fresh page load."
   },
@@ -50,7 +52,7 @@
     "command": "npx vitest run"
   },
   "e2e_tests": {
-    "total": 5,
+    "total": 6,
     "files": 1,
     "command": "npx playwright test --list (count only; pass/fail is recorded by CI and LOG.md)"
   },
@@ -75,6 +77,76 @@
     "js_bytes": 170395,
     "js_gzip_bytes": 56209,
     "definition": "dist/assets after `npm run build`; gzip = Node zlib default level"
+  },
+  "kern_compare_example": {
+    "a": "data/kern/bench_M1024_runN_fastmath.json",
+    "b": "data/kern/bench_M1024_runV_strict.json",
+    "rows": [
+      {
+        "key": "v0_naive",
+        "change_pct": 6.28,
+        "ci_low_pct": 0.26,
+        "ci_high_pct": 11.86,
+        "verdict": "slower",
+        "reason": "95% CI excludes no change and |change| >= 5%"
+      },
+      {
+        "key": "v1_coalesced",
+        "change_pct": 0.87,
+        "ci_low_pct": 0.49,
+        "ci_high_pct": 1.48,
+        "verdict": "inconclusive",
+        "reason": "change below 5% threshold"
+      },
+      {
+        "key": "v2_tiled",
+        "change_pct": 0.84,
+        "ci_low_pct": -0.73,
+        "ci_high_pct": 3.78,
+        "verdict": "inconclusive",
+        "reason": "95% CI includes no change"
+      },
+      {
+        "key": "v3_tiled_vectorized",
+        "change_pct": -0.27,
+        "ci_low_pct": -4.63,
+        "ci_high_pct": 3.69,
+        "verdict": "inconclusive",
+        "reason": "95% CI includes no change"
+      },
+      {
+        "key": "v4_coarsened",
+        "change_pct": 0.1,
+        "ci_low_pct": -0.37,
+        "ci_high_pct": 2.11,
+        "verdict": "inconclusive",
+        "reason": "95% CI includes no change"
+      },
+      {
+        "key": "v5_regtile",
+        "change_pct": -0.61,
+        "ci_low_pct": -2.26,
+        "ci_high_pct": 1.89,
+        "verdict": "inconclusive",
+        "reason": "95% CI includes no change"
+      },
+      {
+        "key": "v6_vec_transposed",
+        "change_pct": 1.32,
+        "ci_low_pct": 1.13,
+        "ci_high_pct": 1.53,
+        "verdict": "inconclusive",
+        "reason": "change below 5% threshold"
+      },
+      {
+        "key": "cublas",
+        "change_pct": 3.61,
+        "ci_low_pct": 1.29,
+        "ci_high_pct": 4.38,
+        "verdict": "inconclusive",
+        "reason": "change below 5% threshold"
+      }
+    ]
   },
   "lighthouse": {
     "status": "NOT RUN",
