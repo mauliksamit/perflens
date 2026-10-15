@@ -81,7 +81,7 @@ function unitTests() {
     total: toNumber(j.numTotalTests) ?? -1,
     passed: toNumber(j.numPassedTests) ?? -1,
     failed: toNumber(j.numFailedTests) ?? -1,
-    files: toNumber(j.numTotalTestSuites) ?? -1,
+    files: Array.isArray(j.testResults) ? j.testResults.length : -1,
     command: "npx vitest run",
   };
 }
@@ -122,7 +122,7 @@ const facts = {
   generated_by: "scripts/facts.ts",
   date_utc: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
   git_commit: sh("git rev-parse --verify -q HEAD").trim() || "uncommitted",
-  environment: { node: process.version, os: `${platform()} ${release()}`, cpu: cpus()[0]?.model ?? "unknown" },
+  environment: { node: process.version, os: `${platform()} ${release()}`, cpu: cpus()[0]?.model.trim() ?? "unknown" },
   samples: listSamples().map((p) => p.slice(ROOT.length + 1).replace(/\\/g, "/")),
   largest_sample_parse: await parseTiming(),
   browser_parse: browserParse(),

@@ -13,7 +13,10 @@ const LARGE = "Large: eager block, 300 steps (.gz)";
 const REPEATS = 5;
 
 function startPreview() {
-  const p = spawn("npx", ["vite", "preview", "--port", "4173", "--strictPort"], { cwd: ROOT, shell: true, stdio: "pipe" });
+  // Run vite's own entry with node (no shell) so kill() reaches the server
+  // itself; a shell wrapper would leave vite orphaned on Windows.
+  const vite = join(ROOT, "node_modules", "vite", "bin", "vite.js");
+  const p = spawn(process.execPath, [vite, "preview", "--port", "4173", "--strictPort"], { cwd: ROOT, stdio: "pipe" });
   return new Promise((resolve, reject) => {
     const t = setTimeout(() => reject(new Error("vite preview did not start")), 30_000);
     p.stdout.on("data", (d) => {
@@ -77,5 +80,4 @@ try {
 } finally {
   await browser.close();
   server.kill();
-  if (process.platform === "win32") spawn("taskkill", ["/pid", String(server.pid), "/T", "/F"], { shell: true });
 }
