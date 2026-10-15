@@ -5,7 +5,7 @@
 // measurement).
 //
 // A number counts as traced when it equals a traced value within its own
-// printed precision (or 1%), after unit conversion (bytes -> KiB/MiB/kB/MB),
+// printed precision, after unit conversion (bytes -> KiB/MiB/kB/MB),
 // or, for % and x/×, when it equals 100*a/b, 100*(a/b-1) or a/b for two traced
 // values. Fenced code blocks are skipped (commands, not claims).
 // Exit 0 = pass, 1 = untraced number found.
@@ -48,8 +48,11 @@ function decimals(s) {
   return i < 0 ? 0 : s.length - i - 1;
 }
 
+// Equal within the number's own printed precision (e.g. "73.8" matches
+// 73.75..73.85; "61,887" must match exactly). No looser relative tolerance:
+// a 1% band would let a wrong count such as 61,881 pass for 61,887.
 function close(v, t, dec) {
-  return Math.abs(v - t) <= Math.max(0.5 * 10 ** -dec + 1e-9, 0.01 * Math.abs(t));
+  return Math.abs(v - t) <= 0.5 * 10 ** -dec + 1e-9;
 }
 
 function isTraced(v, unit, dec) {
