@@ -1,16 +1,16 @@
 {
   "generated_by": "scripts/screenshots.mjs",
-  "sample": "data/traces/block_eager_300steps.json.gz",
+  "sample": "data/traces/llm/tinyllama_s2_sdpa_b1_p128.json.gz",
   "browser": "chromium 131.0.6778.33 (Playwright, headless)",
   "repeats": 5,
-  "trace_events": 61887,
-  "worker_total_ms_median": 73.8,
+  "trace_events": 107107,
+  "worker_total_ms_median": 112.2,
   "worker_total_ms_runs": [
-    72.6,
-    77.3,
-    73.8,
-    75.5,
-    73.8
+    112.1,
+    107.5,
+    112.2,
+    127.1,
+    132.9
   ],
   "definition": "Time inside the Web Worker for gunzip + JSON.parse + normalize + analyses, from performance.now() in the worker (app's data-parse-ms); excludes fetch and React render. Each repeat is a fresh page load."
 }

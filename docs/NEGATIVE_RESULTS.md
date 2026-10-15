@@ -23,5 +23,9 @@
    large trace, stayed on disk. Caught because its event count did not match
    the Node measurement of the regenerated trace. Fixed by running vite
    directly under node; see LOG.md.
-6. **Lighthouse — NOT RUN.** No Lighthouse run was made; the command is in
+6. **Process miss: browser and Node timed different files.** After the
+   TinyLlama traces were added, `facts.ts` picked the new largest sample while
+   `screenshots.mjs` still timed a hard-coded one. Caught by the differing
+   event counts in `results/facts.json`; both now use the same selection rule.
+7. **Lighthouse — NOT RUN.** No Lighthouse run was made; the command is in
    `results/facts.json`.
