@@ -1,0 +1,84 @@
+{
+  "generated_by": "scripts/facts.ts",
+  "date_utc": "2026-10-15T05:31:19Z",
+  "git_commit": "125cf29f3b813ed2c80b518a351ba22604a070f3",
+  "environment": {
+    "node": "v24.21.0",
+    "os": "win32 10.0.26200",
+    "cpu": "AMD Ryzen AI 7 350 w/ Radeon 860M"
+  },
+  "samples": [
+    "data/kern/bench_M1024_runN_fastmath.json",
+    "data/kern/bench_M1024_runV_strict.json",
+    "data/traces/block_eager.json",
+    "data/traces/block_eager_300steps.json.gz",
+    "data/traces/block_sdpa.json"
+  ],
+  "largest_sample_parse": {
+    "sample": "data/traces/block_eager_300steps.json.gz",
+    "file_bytes": 1302985,
+    "json_bytes": 25729903,
+    "trace_events": 61887,
+    "gpu_events": 6300,
+    "repeats": 7,
+    "node_total_ms_median": 151.9,
+    "node_parse_ms_median": 62.7,
+    "definition": "Node (vite-node) on this machine: gunzip + JSON.parse + normalize + analyses (top kernels, idle gaps, heuristic buckets); median of repeats. Not a browser measurement."
+  },
+  "browser_parse": {
+    "source": "results/browser_parse.json (written by scripts/screenshots.mjs)",
+    "generated_by": "scripts/screenshots.mjs",
+    "sample": "data/traces/block_eager_300steps.json.gz",
+    "browser": "chromium 131.0.6778.33 (Playwright, headless)",
+    "repeats": 5,
+    "trace_events": 61887,
+    "worker_total_ms_median": 73.8,
+    "worker_total_ms_runs": [
+      72.6,
+      77.3,
+      73.8,
+      75.5,
+      73.8
+    ],
+    "definition": "Time inside the Web Worker for gunzip + JSON.parse + normalize + analyses, from performance.now() in the worker (app's data-parse-ms); excludes fetch and React render. Each repeat is a fresh page load."
+  },
+  "unit_tests": {
+    "total": 31,
+    "passed": 31,
+    "failed": 0,
+    "files": 2,
+    "command": "npx vitest run"
+  },
+  "e2e_tests": {
+    "total": 5,
+    "files": 1,
+    "command": "npx playwright test --list (count only; pass/fail is recorded by CI and LOG.md)"
+  },
+  "bundle": {
+    "files": [
+      {
+        "file": "index.js",
+        "bytes": 164160,
+        "gzip_bytes": 53400
+      },
+      {
+        "file": "index.css",
+        "bytes": 2841,
+        "gzip_bytes": 1166
+      },
+      {
+        "file": "parse.worker.js",
+        "bytes": 6235,
+        "gzip_bytes": 2809
+      }
+    ],
+    "js_bytes": 170395,
+    "js_gzip_bytes": 56209,
+    "definition": "dist/assets after `npm run build`; gzip = Node zlib default level"
+  },
+  "lighthouse": {
+    "status": "NOT RUN",
+    "reason": "no Lighthouse run in this environment",
+    "command": "npx lighthouse http://localhost:4173 --output=json --output-path=results/lighthouse.json (after npm run build && npm run preview)"
+  }
+}
