@@ -1,0 +1,13 @@
+{
+  "file": "data/kern/bench_M1024_runN_fastmath.json",
+  "source_repo": "https://github.com/mauliksamit/kern",
+  "source_path": "results/bench_M1024_N1024_K1024.json",
+  "source_repo_commit": "e627dc2",
+  "command": "git -C kern show e627dc2:results/bench_M1024_N1024_K1024.json",
+  "bench_json_git_commit_field": "bf49cc0",
+  "compile_flags": "-O3 -lineinfo --use_fast_math -Xcompiler=/O2 -arch=sm_120",
+  "device": "NVIDIA GeForce RTX 5070 Laptop GPU",
+  "driver": "617.14",
+  "description": "run N, built with --use_fast_math (kern's fast-math control)",
+  "note": "Copied byte-for-byte; measured by kern's kern_bench (cudaEvent, 10 warmup + 100 timed)."
+}
