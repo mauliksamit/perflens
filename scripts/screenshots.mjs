@@ -47,6 +47,13 @@ try {
   await page.screenshot({ path: join(shots, "trace.png"), fullPage: true });
   await page.getByTestId("timeline-canvas").screenshot({ path: join(shots, "timeline.png") });
 
+  for (const [label, file] of [["LLM decode: TinyLlama eager (gz)", "llm_eager_timeline.png"],
+                               ["LLM decode: TinyLlama CUDA graph (gz)", "llm_graph_timeline.png"]]) {
+    await page.goto(URL);
+    await load(page, label);
+    await page.getByTestId("timeline-canvas").screenshot({ path: join(shots, file) });
+  }
+
   await page.goto(URL);
   await load(page, "kern 1024³ run N (fast-math)");
   await load(page, "kern 1024³ run V (strict)");
