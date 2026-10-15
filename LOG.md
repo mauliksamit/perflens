@@ -29,3 +29,13 @@
 - Numbers: all in `results/facts.json`, rendered into the README and
   `docs/FACTS.md` by `scripts/render_facts.mjs`; `npm run audit`
   checks README/docs against them.
+
+## 2026-10-15 — Cold-clone check; CI status not readable yet
+- Fresh `git clone` of `a09cbc7` into an empty temp folder, then `npm ci`,
+  `npm test` (31/31 passed, 2 files), `npm run build` (ok), `npm run lint`,
+  `npm run typecheck`, `npm run audit` (passed, facts block fresh) and
+  `npm run e2e` (5/5 passed, Chromium) — all passed.
+- CI: the repository is private, so the workflow run's conclusion cannot be
+  read from the GitHub API without credentials; not claimed. Check
+  https://github.com/mauliksamit/perflens/actions. The Pages workflow will
+  fail until Pages is enabled with "Source: GitHub Actions".
