@@ -15,7 +15,7 @@
     "e2e": "playwright test",
     "screenshots": "node scripts/screenshots.mjs",
     "facts": "vite-node scripts/facts.ts",
-    "audit": "node scripts/claims_audit.mjs"
+    "audit": "node scripts/claims_audit.mjs && node scripts/render_facts.mjs --check"
   },
   "dependencies": {
     "react": "18.3.1",
