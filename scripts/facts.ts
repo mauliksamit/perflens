@@ -9,7 +9,8 @@ import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSy
 import { cpus, platform, release } from "node:os";
 import { join } from "node:path";
 import { gunzipSync, gzipSync } from "node:zlib";
-import { analyzeBytes } from "../src/analysis/analyze";
+import { analyzeBytes, sampleGroups } from "../src/analysis/analyze";
+import { compareGroups } from "../src/analysis/compare";
 import { median } from "../src/analysis/stats";
 import { isRecord, toNumber } from "../src/parse/guards";
 
@@ -118,6 +119,19 @@ function browserParse() {
   return { source: "results/browser_parse.json (written by scripts/screenshots.mjs)", ...JSON.parse(readFileSync(p, "utf-8")) };
 }
 
+async function kernCompareExample() {
+  // The README/docs example: kern run N (fast-math) vs run V (strict), as the app's compare panel computes it.
+  const a = await analyzeBytes("N", new Uint8Array(readFileSync(join(ROOT, "data", "kern", "bench_M1024_runN_fastmath.json"))));
+  const b = await analyzeBytes("V", new Uint8Array(readFileSync(join(ROOT, "data", "kern", "bench_M1024_runV_strict.json"))));
+  const r = compareGroups(sampleGroups(a), sampleGroups(b));
+  return {
+    a: "data/kern/bench_M1024_runN_fastmath.json",
+    b: "data/kern/bench_M1024_runV_strict.json",
+    rows: r.rows.map((x) => ({ key: x.key, change_pct: Number(x.changePct.toFixed(2)), ci_low_pct: Number(x.ciLowPct.toFixed(2)),
+      ci_high_pct: Number(x.ciHighPct.toFixed(2)), verdict: x.verdict, reason: x.reason })),
+  };
+}
+
 const facts = {
   generated_by: "scripts/facts.ts",
   date_utc: new Date().toISOString().replace(/\.\d+Z$/, "Z"),
@@ -129,6 +143,7 @@ const facts = {
   unit_tests: unitTests(),
   e2e_tests: e2eTests(),
   bundle: bundle(),
+  kern_compare_example: await kernCompareExample(),
   lighthouse: {
     status: "NOT RUN",
     reason: "no Lighthouse run in this environment",

@@ -6,8 +6,9 @@
 //
 // A number counts as traced when it equals a traced value within its own
 // printed precision, after unit conversion (bytes -> KiB/MiB/kB/MB),
-// or, for % and x/×, when it equals 100*a/b, 100*(a/b-1) or a/b for two traced
-// values. Fenced code blocks are skipped (commands, not claims).
+// No search over ratios of two values: with many stored values that would let
+// almost any percentage pass. Derived figures must be precomputed into a
+// results file. Fenced code blocks are skipped (commands, not claims).
 // Exit 0 = pass, 1 = untraced number found.
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -58,16 +59,6 @@ function close(v, t, dec) {
 function isTraced(v, unit, dec) {
   const conv = { KiB: 1024, MiB: 1024 * 1024, kB: 1000, KB: 1000, MB: 1e6 }[unit] ?? 1;
   if (uniq.some((t) => close(v, t / conv, dec) || close(v, t, dec))) return true;
-  if (unit === "%" || unit === "×" || unit === "x") {
-    for (const a of uniq) {
-      for (const b of uniq) {
-        if (!b) continue;
-        const r = a / b;
-        if (unit === "%" && (close(v, 100 * r, dec) || close(Math.abs(v), Math.abs(100 * (r - 1)), dec))) return true;
-        if (unit !== "%" && close(v, r, dec)) return true;
-      }
-    }
-  }
   return false;
 }
 
