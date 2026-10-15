@@ -1,7 +1,7 @@
 {
   "constants": [
     { "value": 5, "context": "threshold|drift|noise band|5%", "reason": "default practical threshold for a compare verdict (a setting in src/analysis/compare.ts), not a measurement" },
-    { "value": 95, "context": "CI|confidence", "reason": "confidence level of the bootstrap interval (a setting)" },
+    { "value": 95, "context": "CI|confidence|bootstrap", "reason": "confidence level of the bootstrap interval (a setting)" },
     { "value": 5, "context": "≥ 5 µs|>= 5 µs|minGapUs|listed", "reason": "idle-gap listing threshold (a setting in src/analysis/idleGaps.ts)" },
     { "value": 100, "context": "sum to 100|100%", "reason": "shares summing to 100% (identity)" }
   ]
