@@ -2,8 +2,8 @@ name: Deploy to GitHub Pages
 
 # Builds the app with base /perflens/ and publishes dist/ to GitHub Pages on
 # every push to main. Requires the repository owner to enable Pages with
-# "Source: GitHub Actions" (Settings -> Pages); until then the deploy job fails
-# with a "Pages not enabled" error and the CI workflow is unaffected.
+# "Source: GitHub Actions" (Settings -> Pages); until then deploy is skipped
+# so pushes still pass CI.
 
 on:
   push:
@@ -36,6 +36,7 @@ jobs:
         with:
           path: dist
   deploy:
+    if: ${{ github.event.repository.has_pages }}
     needs: build
     runs-on: ubuntu-latest
     environment:
