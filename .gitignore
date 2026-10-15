@@ -1,0 +1,11 @@
+node_modules/
+dist/
+playwright-report/
+test-results/
+blob-report/
+.vite/
+*.log
+!data/**/*.log
+results/_raw/
+__pycache__/
+.DS_Store
