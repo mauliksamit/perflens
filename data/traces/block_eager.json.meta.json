@@ -1,0 +1,25 @@
+{
+  "file": "data/traces/block_eager.json",
+  "date_utc": "2026-10-15T05:29:37Z",
+  "generator": "scripts/make_traces.py",
+  "command": "python scripts/make_traces.py --variant eager --steps 5 --out data/traces/block_eager.json",
+  "perflens_git_commit": "75db8e6798a7796148dcce1c3967928210b70483",
+  "gpu_nvidia_smi": "NVIDIA GeForce RTX 5070 Laptop GPU, 617.14, 12.0",
+  "torch": "2.14.1+cu130",
+  "torch_cuda": "13.0",
+  "python": "3.14.7",
+  "os": "Windows-11-10.0.26200-SP0",
+  "dtype": "float32",
+  "tf32_matmul": false,
+  "tf32_cudnn": false,
+  "workload": {
+    "variant": "eager",
+    "batch": 8,
+    "seq": 256,
+    "d_model": 512,
+    "heads": 8,
+    "warmup": 10,
+    "profiled_steps": 5,
+    "seed": 0
+  }
+}
