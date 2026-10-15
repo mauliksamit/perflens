@@ -1,7 +1,7 @@
 {
   "generated_by": "scripts/facts.ts",
-  "date_utc": "2026-10-15T07:33:55Z",
-  "git_commit": "6978490685ecfaff81b3efd900d5cd744f1c2e8f",
+  "date_utc": "2026-10-15T07:34:40Z",
+  "git_commit": "afd6bd0d9d5f1f938a66f4e2a319c4294e522b04",
   "environment": {
     "node": "v24.21.0",
     "os": "win32 10.0.26200",
@@ -23,8 +23,8 @@
     "trace_events": 107107,
     "gpu_events": 13905,
     "repeats": 7,
-    "node_total_ms_median": 225.6,
-    "node_parse_ms_median": 91,
+    "node_total_ms_median": 224.4,
+    "node_parse_ms_median": 89.1,
     "definition": "Node (vite-node) on this machine: gunzip + JSON.parse + normalize + analyses (top kernels, idle gaps, heuristic buckets); median of repeats. Not a browser measurement."
   },
   "browser_parse": {
