@@ -7,7 +7,7 @@ kernel timeline, a top-kernel table, GPU idle-gap analysis, and a run
 comparison that labels differences inside the noise band **inconclusive**.
 Files are parsed in a Web Worker in your browser and never uploaded.
 
-**Live demo:** _placeholder — link goes here once GitHub Pages is enabled for this repo._
+**Live demo:** https://mauliksamit.github.io/perflens/
 
 ![Trace view: timeline, top kernels, idle gaps](docs/screenshots/trace.png)
 
